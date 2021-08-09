@@ -4,6 +4,7 @@ public class WordFrequencyGame {
     private final static String BLANK_SPACE = "\\s+";
     private final static String ERROR_MESSAGE = "Calculate Error";
     private final static String ONE = " 1";
+    private List<WordInfo> wordInfoList = new ArrayList<>();
 
     public String getResult(String message) {
 
@@ -12,28 +13,22 @@ public class WordFrequencyGame {
         } else {
 
             try {
-                //split the input string with 1 to n pieces of spaces
-                List<WordInfo> wordInfoList = new ArrayList<>();
                 List<String> wordCount = new ArrayList(Arrays.asList(message.split(BLANK_SPACE)));
-
-                buildWordInfo(wordInfoList, wordCount);
-
-                //get the map for the next step of sizing the same word
-                Map<String, List<WordInfo>> map = getListMap(wordInfoList);
-
-                wordInfoList = getWordInfos(map);
-
+                generateWordInfo(wordCount);
                 wordInfoList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
-
                 StringJoiner joiner = new StringJoiner("\n");
-
                 joinWordResult(wordInfoList, joiner);
-
                 return joiner.toString();
             } catch (Exception e) {
                 return ERROR_MESSAGE;
             }
         }
+    }
+
+    private void generateWordInfo(List<String> wordCount) {
+        buildWordInfo(wordInfoList, wordCount);
+        Map<String, List<WordInfo>> map = getListMap(wordInfoList);
+        wordInfoList = getWordInfos(map);
     }
 
     private void joinWordResult(List<WordInfo> wordInfoList, StringJoiner joiner) {
