@@ -1,17 +1,20 @@
 import java.util.*;
 
 public class WordFrequencyGame {
+    private final static String BLANK_SPACE = "\\s+";
+    private final static String ERROR_MESSAGE = "Calculate Error";
+    private final static String ONE = " 1";
+
     public String getResult(String inputStr) {
 
-
-        if (inputStr.split("\\s+").length == 1) {
-            return inputStr + " 1";
+        if (inputStr.split(BLANK_SPACE).length == 1) {
+            return inputStr + ONE;
         } else {
 
             try {
 
                 //split the input string with 1 to n pieces of spaces
-                String[] arr = inputStr.split("\\s+");
+                String[] arr = inputStr.split(BLANK_SPACE);
 
                 List<Input> inputList = new ArrayList<>();
                 for (String s : arr) {
@@ -40,7 +43,7 @@ public class WordFrequencyGame {
             } catch (Exception e) {
 
 
-                return "Calculate Error";
+                return ERROR_MESSAGE;
             }
         }
     }
