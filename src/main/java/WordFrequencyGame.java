@@ -26,15 +26,21 @@ public class WordFrequencyGame {
                 wordInfoList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
                 StringJoiner joiner = new StringJoiner("\n");
-                for (WordInfo w : wordInfoList) {
-                    String s = w.getValue() + " " + w.getWordCount();
-                    joiner.add(s);
-                }
+
+                joinWordResult(wordInfoList, joiner);
+
                 return joiner.toString();
             } catch (Exception e) {
                 return ERROR_MESSAGE;
             }
         }
+    }
+
+    private void joinWordResult(List<WordInfo> wordInfoList, StringJoiner joiner) {
+        wordInfoList.forEach(wordInfo -> {
+            String s = wordInfo.getValue() + " " + wordInfo.getWordCount();
+            joiner.add(s);
+        });
     }
 
     private List<WordInfo> getWordInfos(Map<String, List<WordInfo>> map) {
@@ -51,13 +57,13 @@ public class WordFrequencyGame {
         wordCount.forEach(s -> {
             WordInfo wordInfo = new WordInfo(s, 1);
             wordInfoList.add(wordInfo);
-        } );
+        });
     }
 
     private Map<String, List<WordInfo>> getListMap(List<WordInfo> wordInfoList) {
         Map<String, List<WordInfo>> map = new HashMap<>();
-        for (WordInfo wordInfo : wordInfoList) {
-//       map.computeIfAbsent(input.getValue(), k -> new ArrayList<>()).add(input);
+
+        wordInfoList.forEach(wordInfo -> {
             if (!map.containsKey(wordInfo.getValue())) {
                 ArrayList arr = new ArrayList<>();
                 arr.add(wordInfo);
@@ -65,8 +71,7 @@ public class WordFrequencyGame {
             } else {
                 map.get(wordInfo.getValue()).add(wordInfo);
             }
-        }
-
+        });
         return map;
     }
 
