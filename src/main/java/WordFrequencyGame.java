@@ -21,14 +21,7 @@ public class WordFrequencyGame {
                 //get the map for the next step of sizing the same word
                 Map<String, List<WordInfo>> map = getListMap(wordInfoList);
 
-                List<WordInfo> list = new ArrayList<>();
-
-                for (Map.Entry<String, List<WordInfo>> entry : map.entrySet()) {
-                    WordInfo wordInfo = new WordInfo(entry.getKey(), entry.getValue().size());
-                    list.add(wordInfo);
-                }
-                
-                wordInfoList = list;
+                wordInfoList = getWordInfos(map);
 
                 wordInfoList.sort((w1, w2) -> w2.getWordCount() - w1.getWordCount());
 
@@ -39,10 +32,19 @@ public class WordFrequencyGame {
                 }
                 return joiner.toString();
             } catch (Exception e) {
-
                 return ERROR_MESSAGE;
             }
         }
+    }
+
+    private List<WordInfo> getWordInfos(Map<String, List<WordInfo>> map) {
+        List<WordInfo> list = new ArrayList<>();
+
+        for (Map.Entry<String, List<WordInfo>> entry : map.entrySet()) {
+            WordInfo wordInfo = new WordInfo(entry.getKey(), entry.getValue().size());
+            list.add(wordInfo);
+        }
+        return list;
     }
 
     private void buildWordInfo(List<WordInfo> wordInfoList, List<String> wordCount) {
