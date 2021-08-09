@@ -8,20 +8,23 @@ import static java.util.stream.Collectors.toList;
 
 public class WordFrequencyGame {
     private final static String BLANK_SPACE = "\\s+";
-    private final static String ERROR_MESSAGE = "Calculate Error";
     private final static String ONE = " 1";
     private List<WordInfo> wordInfo = new ArrayList<>();
 
     public String getResult(String sentence) {
-        if (sentence.split(BLANK_SPACE).length == 1) {
+        if (isSingleWord(sentence)) {
             return sentence.concat(ONE);
         }
         try {
             wordInfo = calculateWordInfo(sentence);
             return joinWords(wordInfo);
         } catch (Exception e) {
-            return ERROR_MESSAGE;
+            return "Calculate Error";
         }
+    }
+
+    private boolean isSingleWord(String sentence) {
+        return sentence.split(BLANK_SPACE).length == 1;
     }
 
     private String joinWords(List<WordInfo> wordInfoList) {
